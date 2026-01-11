@@ -2,3 +2,4 @@ node_modules
 .venv
 dist
 .env
+.DS_Store
