@@ -3,10 +3,10 @@ import { Menu, X, Github, Linkedin, Mail, Phone, MapPin, Calendar, ExternalLink,
 import profileImg from "./assets/profile.jpg";
 
 const PORTFOLIO_DATA = {
-  name: "Shaswat Kumar",
+  name: "Shaswat Kumar", 
   title: "Full Stack Developer",
   roles: [
-    "Full Stack Developer",
+    "Full Stack Developer", 
     "Python Developer",
     "Aspiring DevOps Engineer",
   ],
@@ -35,6 +35,36 @@ const PORTFOLIO_DATA = {
     { name: "E-Commerce Platform", description: "A full-featured online shopping platform with payment integration, order management, and admin dashboard.", tech: ["React", "Node.js", "MongoDB", "Stripe"], category: "Web App", github: "https://github.com/yourusername/project1", demo: "https://demo-link.com" },
     { name: "Task Management App", description: "Real-time collaborative task management tool with team features and analytics dashboard.", tech: ["Next.js", "PostgreSQL", "WebSocket", "Tailwind"], category: "Web App", github: "https://github.com/yourusername/project2", demo: "https://demo-link.com" },
     { name: "Portfolio Website Builder", description: "Drag-and-drop portfolio builder allowing users to create stunning portfolios without coding.", tech: ["React", "Firebase", "Framer Motion"], category: "Web App", github: "https://github.com/yourusername/project3", demo: "https://demo-link.com" }
+  ],
+  highlights: [
+    { 
+      title: "AWS Certified Solutions Architect", 
+      issuer: "Amazon Web Services",
+      date: "2023",
+      icon: Award,
+      link: "#"
+    },
+    { 
+      title: "Google Cloud Professional", 
+      issuer: "Google Cloud",
+      date: "2023",
+      icon: Award,
+      link: "#"
+    },
+    { 
+      title: "React Advanced Certification", 
+      issuer: "Meta",
+      date: "2022",
+      icon: Award,
+      link: "#"
+    },
+    { 
+      title: "Best Innovation Award", 
+      issuer: "Tech Company Inc.",
+      date: "2023",
+      icon: Star,
+      link: "#"
+    }
   ],
   experience: [
     { company: "Tech Company Inc.", position: "Senior Full Stack Developer", duration: "Jan 2023 - Present", description: "Leading development of enterprise applications and mentoring junior developers.", achievements: ["Improved application performance by 40%", "Led team of 5 developers", "Implemented CI/CD pipeline"] },
@@ -429,6 +459,9 @@ const Portfolio = () => {
   const [contactForm, setContactForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const saved = localStorage.getItem('isDarkMode');
@@ -460,7 +493,7 @@ const Portfolio = () => {
     const handleScroll = () => { 
       setScrolled(window.scrollY > 50);
 
-      const sections = ['home', 'about', 'services', 'projects', 'experience', 'contact'];
+      const sections = ['home', 'about', 'services', 'projects', 'experience', 'highlights', 'contact'];
       const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -494,12 +527,34 @@ const Portfolio = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      alert(`Message sent! (Demo)\n\nName: ${contactForm.name}\nEmail: ${contactForm.email}`);
-      setContactForm({ name: '', email: '', subject: '', message: '' });
+    try {
+      // Using mailto link for direct email
+      const subject = encodeURIComponent(contactForm.subject);
+      const body = encodeURIComponent(
+        `Name: ${contactForm.name}\nEmail: ${contactForm.email}\n\nMessage:\n${contactForm.message}`
+      );
+      
+      window.location.href = `mailto:shaswatsinha356@gmail.com?subject=${subject}&body=${body}`;
+      
+      // Show success modal after a brief delay
+      setTimeout(() => {
+        setShowSuccessModal(true);
+        setContactForm({ name: '', email: '', subject: '', message: '' });
+        setIsSubmitting(false);
+      }, 500);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to send message. Please try again.');
       setIsSubmitting(false);
-    }, 1000);  
+    }
   };
+
+  //   setTimeout(() => {
+  //     alert(`Message sent! (Demo)\n\nName: ${contactForm.name}\nEmail: ${contactForm.email}`);
+  //     setContactForm({ name: '', email: '', subject: '', message: '' });
+  //     setIsSubmitting(false);
+  //   }, 1000);  
+  // };
 
   const bgClass = isDarkMode 
     ? 'bg-gradient-to-b from-[#0a0a1e] via-[#0f0f2e] to-[#0a0a1e]' 
@@ -562,7 +617,7 @@ const Portfolio = () => {
             </button>
             
             <div className="hidden md:flex space-x-1 items-center">
-              {['home', 'about', 'services', 'projects', 'experience', 'contact'].map((item) => (
+              {['home', 'about', 'services', 'projects', 'experience','highlights', 'contact'].map((item) => (
                 <button key={item} onClick={() => scrollToSection(item)} className={`capitalize relative px-4 py-2 rounded-lg transition-all duration-300 text-base ${activeSection === item ? (theme.text || 'text-blue-600') + ' font-semibold' : (isDarkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900')}`}>
                   {item}
                   {activeSection === item && (
@@ -651,7 +706,7 @@ const Portfolio = () => {
         {isMenuOpen && (
           <div className={`md:hidden ${isDarkMode ? 'bg-[#050514]/95' : 'bg-white/95'} backdrop-blur-2xl`}>
             <div className="px-4 py-3 space-y-2">
-              {['home', 'about', 'services', 'projects', 'experience', 'contact'].map((item) => (
+              {['home', 'about', 'services', 'projects', 'experience','highlights', 'contact'].map((item) => (
                 <button key={item} onClick={() => scrollToSection(item)} className={`block w-full text-left px-4 py-3 capitalize rounded-lg transition-all ${activeSection === item ? (isDarkMode ? 'bg-blue-500/20' : 'bg-blue-100') + ' ' + (theme.text || 'text-blue-600') : isDarkMode ? 'hover:bg-blue-500/10' : 'hover:bg-gray-100'}`}>
                   {item}
                 </button>
@@ -710,13 +765,16 @@ const Portfolio = () => {
       {/* Hero Section */}
       <section id="home" className="relative flex flex-col justify-center px-4 pt-20 min-h-screen pb-20">
         <div className="max-w-4xl mx-auto text-center space-y-8 relative z-20">
-          <div className="relative w-40 h-40 mx-auto">
+          <div className="relative w-40 h-40 mx-auto cursor-pointer group" onClick={() => setShowImageModal(true)}>
             <div className="absolute inset-0 rounded-full ring-4 ring-green-400 shadow-[0_0_30px_rgba(34,197,94,0.6)] animate-pulse" />
             <div className={`absolute inset-2 ${isDarkMode ? 'bg-[#0a0a1e]' : 'bg-white'} rounded-full`} />
             <div className="absolute inset-1 rounded-full overflow-hidden">
               <img src={profileImg} alt="Shaswat Kumar" className="w-full h-full object-cover object-top" />
             </div>
             <Star className="absolute -top-2 -right-2 text-yellow-400 animate-pulse" size={15} />
+            <div className="absolute inset-0 rounded-full bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
+                <ExternalLink className="opacity-0 group-hover:opacity-100 text-white" size={24} />
+            </div>
           </div>
 
           <div className="space-y-6">
@@ -799,6 +857,42 @@ const Portfolio = () => {
         </div>
       </section>
 
+      {showImageModal && (
+      <div
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fadeIn"
+        onClick={() => setShowImageModal(false)}
+      >
+        <div
+          className="relative animate-scaleIn"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* close button */}
+          <button
+            onClick={() => setShowImageModal(false)}
+            className="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-black/70 text-white flex items-center justify-center hover:scale-110 transition"
+          >
+            <X size={18} />
+          </button>
+
+          {/* PREVIEW IMAGE */}
+          <div
+            className="rounded-2xl overflow-hidden shadow-2xl"
+            style={{
+              width: '280px',   
+              height: '290px',
+              border: `4px solid ${theme.primary}`
+            }}
+          >
+            <img
+              src={profileImg}
+              alt="Shaswat Kumar"
+              className="w-full h-full object-cover object-top"
+            />
+          </div>
+        </div>
+      </div>
+    )}
+      
       {/* About, Services, Projects, Experience, Contact Sections - Abbreviated for space */}
       <section id="about" className="pt-32 pb-24 px-4 relative z-20">
         <div className="max-w-6xl mx-auto">
@@ -974,7 +1068,133 @@ const Portfolio = () => {
           </div>
         </div>
       </section>
+      
+      <section id="highlights" className="py-24 px-4 relative z-20">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-5xl md:text-6xl font-bold text-center mb-20">
+            <span
+              style={{ color: isDarkMode ? undefined : theme.primary }} 
+              className={isDarkMode ? `bg-gradient-to-r ${theme.gradient || 'from-blue-400 to-purple-400'} bg-clip-text text-transparent` : ''}>
+              Achievements & Certificates
+            </span>
+          </h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {PORTFOLIO_DATA.highlights.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <a 
+                  key={idx}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`backdrop-blur-sm ${isDarkMode ? 'bg-white/5' : 'bg-white/50'} p-6 rounded-2xl border ${theme.border || 'border-gray-200'} ${theme.hoverBorder || 'hover:border-gray-300'} ${isDarkMode ? 'hover:bg-white/10' : 'hover:bg-white/70'} transition-all duration-300 hover:scale-105 hover:-translate-y-2 group cursor-pointer`}
+                >
+                  <div className="flex items-center justify-center w-16 h-16 rounded-xl mb-4 mx-auto group-hover:scale-110 group-hover:rotate-6 transition-all" 
+                    style={{ background: `linear-gradient(135deg, ${theme.primary}30, ${theme.secondary}30)` }}
+                  >
+                    <Icon className={theme.text || 'text-blue-600'} size={32} />
+                  </div>
+                  <h3 className={`text-lg font-bold mb-2 text-center ${theme.text || 'text-blue-600'}`}>
+                    {item.title}
+                  </h3>
+                  <p className={`text-sm text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>
+                    {item.issuer}
+                  </p>
+                  <p className="text-xs text-center opacity-60">{item.date}</p>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
+      {/* CTA Section - Available for Freelancing */}
+      <section className="relative py-32 px-4 overflow-hidden z-20 my-24 mx-4 md:mx-8 rounded-3xl">
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-3xl"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80)',
+          }}
+        />
+        
+        {/* Dark Gradient Overlay */}
+        <div 
+          className="absolute inset-0 rounded-3xl"
+          style={{
+            background: 'radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.75) 60%, rgba(0,0,0,0.95) 100%)'
+          }}
+        />
+
+        {/* Accent Glow Effects - NO VISIBLE SHAPES */}
+        <div 
+          className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full blur-[150px] opacity-10 pointer-events-none"
+          style={{ background: theme.primary }}
+        />
+        <div 
+          className="absolute -bottom-32 -right-32 w-[600px] h-[600px] rounded-full blur-[150px] opacity-10 pointer-events-none"
+          style={{ background: theme.secondary }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 max-w-5xl mx-auto text-center space-y-8">
+          {/* Main Heading */}
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+            <span className="text-white">I'm </span>
+            <span 
+              className="inline-block animate-pulse"
+              style={{ 
+                color: theme.primary,
+                textShadow: `0 0 40px ${theme.primary}60, 0 0 80px ${theme.primary}30`
+              }}
+            >
+              Available
+            </span>
+            <span className="text-white"> for freelancing</span>
+          </h2>
+
+          {/* Subtitle */}
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-4">
+            I am available for freelancing opportunities and new projects. If you have any questions or inquiries, feel free to reach out!
+          </p>
+
+          {/* CTA Button */}
+          <div className="pt-6">
+            <button
+              onClick={() => (window.location.href = "mailto:shaswatsinha356@gmail.com?subject=Freelance%20Opportunity")}
+              className="group relative inline-flex items-center gap-3 px-10 py-5 text-lg sm:text-xl font-bold text-white rounded-full overflow-hidden transition-all duration-300 hover:scale-110 hover:shadow-2xl"
+              style={{
+                background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
+                boxShadow: `0 20px 40px ${theme.primary}40`
+              }}
+            >
+              <span 
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: `linear-gradient(135deg, ${theme.secondary}, ${theme.primary})`,
+                }}
+              />
+              
+              <span className="relative z-10 flex items-center gap-3">
+                <Mail size={24} className="group-hover:rotate-12 transition-transform" />
+                HIRE ME
+                <ExternalLink size={20} className="group-hover:translate-x-1 transition-transform" />
+              </span>
+
+              <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            </button>
+          </div>
+
+          {/* Decorative Elements */}
+          <div className="flex items-center justify-center gap-3 pt-4">
+            <div className="w-12 h-[2px] bg-gradient-to-r from-transparent to-white/30" />
+            <Star className="text-white/40 animate-pulse" size={16} />
+            <div className="w-12 h-[2px] bg-gradient-to-l from-transparent to-white/30" />
+          </div>
+        </div>
+      </section>
+      
       <section id="contact" className="py-24 px-4 relative z-20">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-5xl md:text-6xl font-bold text-center mb-20">
@@ -1061,7 +1281,7 @@ const Portfolio = () => {
             ))}
           </div>
           <p className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>
-            © 2026 <span className={`${theme.text || 'text-blue-600'} font-semibold`}>{PORTFOLIO_DATA.name}</span>. Crafted with ❤️ in the cosmos using React & Tailwind CSS
+            © 2026 <a href={PORTFOLIO_DATA.linkedin} target="_blank" rel="noopener noreferrer" className={`${theme.text || 'text-blue-600'} font-semibold hover:underline hover:opacity-80 transition-all`}>{PORTFOLIO_DATA.name}</a>. Learning. Growing. Improving. 😎
           </p>
           <div className={`flex items-center justify-center gap-2 text-sm ${theme.text || 'text-blue-600'}`}>
             <Rocket size={16} className="animate-bounce" />
@@ -1070,23 +1290,102 @@ const Portfolio = () => {
         </div>
       </footer>
 
-      <style jsx>{`
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn"
+          onClick={() => setShowSuccessModal(false)}
+        >
+          <div
+            className="relative max-w-md w-full animate-scaleIn"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              className={`backdrop-blur-xl ${
+                isDarkMode ? 'bg-white/10' : 'bg-white/90'
+              } p-8 rounded-3xl border-2 shadow-2xl`}
+              style={{ borderColor: theme.primary }}
+            >
+              <div className="text-center space-y-6">
+                <div
+                  className="w-20 h-20 mx-auto rounded-full flex items-center justify-center animate-bounce"
+                  style={{
+                    background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
+                  }}
+                >
+                  <Send className="text-white" size={36} />
+                </div>
+
+                <div>
+                  <h3 className={`text-3xl font-bold mb-3 ${theme.text || 'text-blue-600'}`}>
+                    Message Sent! 🚀
+                  </h3>
+                  <p className={isDarkMode ? 'text-gray-300' : 'text-gray-700'}>
+                    Your email client should open shortly
+                  </p>
+                  <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-2`}>
+                    Thank you for reaching out! I'll get back to you soon.
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => setShowSuccessModal(false)}
+                  className="w-full px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105 text-white"
+                  style={{
+                    background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
+                  }}
+                >
+                  Got it!
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        /* Slow rotation (icons, stars) */
         @keyframes spin-slow {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
+
+        /* Gradient text animation */
         @keyframes gradient {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
+
+        /* Fade in animation */
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        /* Modal scale */
+        @keyframes scaleIn {
+          from { transform: scale(0.85); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+
         .animate-spin-slow {
           animation: spin-slow 8s linear infinite;
         }
+
         .animate-gradient {
           background-size: 200% 200%;
           animation: gradient 3s ease infinite;
         }
+
+        .animate-fadeIn {
+          animation: fadeIn 0.25s ease-out;
+        }
+
+        .animate-scaleIn {
+          animation: scaleIn 0.25s ease-out;
+        }
       `}</style>
+      
     </div>
   );
 };
