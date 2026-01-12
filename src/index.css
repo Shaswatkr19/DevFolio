@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* =====================
+   Base (sab ke liye)
+===================== */
 html,
 body,
 #root {
@@ -7,10 +10,39 @@ body,
   min-height: 100%;
   margin: 0;
   padding: 0;
-
   background-color: #0a0a1e;
   overflow-x: hidden;
-
-  
   overscroll-behavior: none;
+}
+
+/* Default font size for all browsers */
+html {
+  font-size: 78%; /* Chrome/Windows default */
+}
+
+/* =====================
+   ✅ Safari/Firefox detection
+   Using -webkit-hyphens which Chrome doesn't support
+===================== */
+@supports (-webkit-hyphens: none) {
+  html {
+    font-size: 100%;
+  }
+}
+
+/* =====================
+   ✅ Firefox ONLY
+===================== */
+@supports (-moz-appearance: none) {
+  html {
+    font-size: 100%;
+  }
+}
+
+/* =====================
+   Font rendering
+===================== */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
