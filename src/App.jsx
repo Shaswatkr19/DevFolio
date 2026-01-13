@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Github, Linkedin, Mail, Phone, MapPin, Calendar, ExternalLink, Download, ChevronDown, Code, Palette, Smartphone, Users, Award, Briefcase, GraduationCap, Send, Star, Rocket, Sun, Moon } from 'lucide-react';
 import profileImg from "./assets/profile.jpg";
+import certificateImg from "./assets/udemy-certificate.jpg";
+import studymateImg from "./assets/studymate.png";
+import megacartImg from "./assets/megacart.png";
+import tourcraftImg from "./assets/tourcraft.png";
+import einsteinaiImg from "./assets/einsteinai.png";
+import pyroiqbotImg from "./assets/pyroiqbot.png";
+import pingmeImg from "./assets/pingme.png";
+
 
 const PORTFOLIO_DATA = {
   name: "Shaswat Kumar", 
@@ -10,8 +18,8 @@ const PORTFOLIO_DATA = {
     "Python Developer",
     "Aspiring DevOps Engineer",
   ],
-  tagline: "Building Digital Experiences That Matter",
-  bio: "I am a passionate Full-Stack Developer with expertise in creating scalable and robust applications. I specialize in modern web technologies and have a keen eye for design. My focus is on delivering high-quality, user-friendly solutions that make a real impact.",
+  tagline: "Learning, building, and crafting better digital experiences every day",
+  bio: "I'm a growing Full Stack Developer who loves learning, building, and improving every day. I focus on creating practical, user friendly web solutions while constantly sharpening my skills with modern technologies.",
   email: "shaswatsinha356@gmail.com",
   phone: "+91 7004504120",
   location: "Ranchi-Jharkhand, India",
@@ -20,57 +28,171 @@ const PORTFOLIO_DATA = {
   github: "https://github.com/Shaswatkr19",
   linkedin: "https://www.linkedin.com/in/shaswatkr19",
   skills: {
-    languages: ["JavaScript", "Python", "TypeScript", "Java", "C++"],
-    frontend: ["React", "Next.js", "Tailwind CSS", "HTML5", "CSS3"],
-    backend: ["Node.js", "Express", "MongoDB", "PostgreSQL", "REST APIs"],
-    tools: ["Git", "Docker", "VS Code", "Figma", "Postman"]
+    languages: [
+      "Python",
+      "JavaScript"
+    ],
+  
+    backend: [
+      "FastAPI",
+      "Flask",
+      "Django",
+      "REST APIs",
+      "Auth & CRUD"
+    ],
+  
+    frontend: [
+      "React",
+      "HTML5",
+      "CSS3",
+      "Tailwind CSS",
+      "API Integration"
+    ],
+  
+    databases: [
+      "PostgreSQL",
+      "MongoDB",
+      "ORM (Django / SQLAlchemy)",
+      "Database Design"
+    ],
+  
+    devops_and_tools: [
+      "Git & GitHub",
+      "Docker",
+      "Postman",
+      "VS Code",
+      "Cursor IDE"
+    ],
+  
+    deployment: [
+      "Render",
+      "Railway",
+      "Netlify",
+      "Vercel"
+    ],
+  
+    learning: [
+      "Docker",
+      "CI/CD",
+      "Kubernetes",
+      "Linux",
+      "Cloud (AWS / Azure)",
+      "Nginx"
+    ]
   },
   services: [
-    { icon: Code, title: "Web Development", description: "Build scalable web applications with modern frameworks and cutting-edge technologies." },
-    { icon: Palette, title: "UI/UX Design", description: "Create beautiful, intuitive interfaces that provide exceptional user experiences." },
-    { icon: Smartphone, title: "Mobile Development", description: "Develop cross-platform mobile applications with React Native and Flutter." },
-    { icon: Users, title: "Team Leadership", description: "Lead development teams, review code, and ensure best practices are followed." }
+    { icon: Rocket, title: "Web Development", description: "Build scalable web applications with modern frameworks and cutting-edge technologies." },
+    { icon: Users, title: "Database Design", description: "Designing and implementing efficient database schemas using PostgreSQL, MongoDB, and ORMs." },
+    { icon: Star, title: "Deployment & DevOps", description: "Deploying applications on cloud platforms like Render, Railway, Vercel, and managing CI/CD pipelines." },
+    { icon: GraduationCap, title: "Team Leadership", description: "Lead development teams, review code, and ensure best practices are followed." },
+    { icon: Palette, title: "API Development", description: "Creating robust REST APIs with authentication, CRUD operations, and comprehensive documentation." },
+    { icon: Code, title: "Python Automation", description: "Creating Python scripts and tools to automate repetitive tasks, data processing, and workflow optimization." },
+    { icon: Award, title: "Learning & Experimentation", description: "Constantly exploring new technologies, frameworks, and best practices to stay updated with the evolving tech landscape." },
+    { icon: Briefcase, title: "Problem Solving", description: "Tackling real-world challenges through code, debugging complex issues, and finding efficient solutions to technical problems." }
   ],
   projects: [
-    { name: "E-Commerce Platform", description: "A full-featured online shopping platform with payment integration, order management, and admin dashboard.", tech: ["React", "Node.js", "MongoDB", "Stripe"], category: "Web App", github: "https://github.com/yourusername/project1", demo: "https://demo-link.com" },
-    { name: "Task Management App", description: "Real-time collaborative task management tool with team features and analytics dashboard.", tech: ["Next.js", "PostgreSQL", "WebSocket", "Tailwind"], category: "Web App", github: "https://github.com/yourusername/project2", demo: "https://demo-link.com" },
-    { name: "Portfolio Website Builder", description: "Drag-and-drop portfolio builder allowing users to create stunning portfolios without coding.", tech: ["React", "Firebase", "Framer Motion"], category: "Web App", github: "https://github.com/yourusername/project3", demo: "https://demo-link.com" }
+    { 
+      name: "StudyMate-AI", 
+      description: "Full-stack AI-powered study assistant that allows users to upload study materials (PDFs and YouTube videos), ask contextual questions, and receive AI-generated explanations and summaries.", 
+      tech: ["Python", "Django REST Framework", "React.js", "Gemini AI", "PostgreSQL"], 
+      category: "AI Web App", 
+      github: "https://github.com/Shaswatkr19/StudyMate-AI", 
+      demo: "https://studymate-ai-shaswat.netlify.app/",
+      image: studymateImg
+    },
+    { 
+      name: "MegaCart", 
+      description: "Full-stack e-commerce application with product browsing, filtering, cart management, and complete checkout workflows through a clean and user-friendly interface.", 
+      tech: ["FastAPI", "Python", "MongoDB", "JWT Auth", "Tailwind CSS"], 
+      category: "Web App", 
+      github: "https://github.com/Shaswatkr19/MegaCart", 
+      demo: "https://68c1e053a811e70693c97ba2--kaleidoscopic-kitsune-d0d5df.netlify.app/",
+      image: megacartImg
+    },
+    { 
+      name: "TourCraft", 
+      description: "Web-based platform for creating interactive product tours and step-by-step guides with screen recordings, highlights, annotations, and smooth transitions.", 
+      tech: ["Django REST Framework", "PostgreSQL", "HTML5", "JavaScript", "CSS3"], 
+      category: "Web App", 
+      github: "https://github.com/Shaswatkr19/TourCraft", 
+      demo: "https://tourcraft-c5bw.onrender.com/",
+      image: tourcraftImg
+    },
+    { 
+      name: "EinsteinAI", 
+      description: "AI-powered chatbot using LangChain and Gemini AI that simulates conversations inspired by Albert Einstein for educational discussions and scientific exploration.", 
+      tech: ["Python", "LangChain", "Gemini AI", "Gradio"], 
+      category: "AI App", 
+      github: "https://github.com/Shaswatkr19/EinsteinAI", 
+      demo: "https://einsteinai-x8l5.onrender.com",
+      image: einsteinaiImg
+    },
+    { 
+      name: "PyroIQBot", 
+      description: "AI-powered Telegram bot integrating Google Gemini AI and NewsData API to deliver intelligent conversations and real-time tech news updates with async architecture. This bot is live and actively running on Telegram.",
+      tech: ["Python", "Telegram Bot API", "Gemini AI", "NewsData API"], 
+      category: "Bot", 
+      github: "https://github.com/Shaswatkr19/PyroIQBot", 
+      // demo: "#",
+      image: pyroiqbotImg
+    },
+    {
+      name: "PingMe",
+      description: "PingMe is a chat application. Backend built using Django, Django REST Framework, and Django Channels. The project focuses on implementing 1-to-1 messaging with JWT-based authentication over WebSockets, similar to modern chat applications. Currently in development — features and improvements in progress.",
+      tech: ["Python", "Django", "DRF", "JWT Authentication", "Redis", "SQLite",  "Daphne Server", "WebSockets", "HTTP Protocol"],
+      category: "Web App",
+      github: "https://github.com/Shaswatkr19/PingMe",
+      // demo: "In progress",
+      image: pingmeImg
+    }, 
+    
   ],
   highlights: [
     { 
-      title: "AWS Certified Solutions Architect", 
-      issuer: "Amazon Web Services",
-      date: "2023",
+      title: "Python Mega Course: Build 20 Real-World Apps and AI Agents", 
+      issuer: "Udemy",
+      date: "Nov 2025",
       icon: Award,
-      link: "#"
+      link: "https://www.udemy.com/certificate/UC-77ea6be7-8bd8-44d1-9f7a-5aa92cd31c6a/",
+      certificateImage: certificateImg, 
+      hasImage: true 
     },
     { 
-      title: "Google Cloud Professional", 
-      issuer: "Google Cloud",
-      date: "2023",
-      icon: Award,
-      link: "#"
+      title: "Python Programming - Beginner to Intermediate", 
+      issuer: "CodeWithHarry (YouTube)",
+      date: "Apr 2025 - Jun 2025",
+      icon: GraduationCap,
+      link: "https://www.youtube.com/@CodeWithHarry"
     },
     { 
-      title: "React Advanced Certification", 
-      issuer: "Meta",
-      date: "2022",
-      icon: Award,
-      link: "#"
+      title: "5+ Full Stack Projects Completed", 
+      issuer: "Self-Built Portfolio",
+      date: "2025",
+      icon: Rocket,
+      link: "#projects"
     },
     { 
-      title: "Best Innovation Award", 
-      issuer: "Tech Company Inc.",
-      date: "2023",
+      title: "AI Integration Specialist", 
+      issuer: "Gemini AI & LangChain Projects",
+      date: "2025",
       icon: Star,
-      link: "#"
+      link: "#projects"
     }
   ],
   experience: [
-    { company: "Tech Company Inc.", position: "Senior Full Stack Developer", duration: "Jan 2023 - Present", description: "Leading development of enterprise applications and mentoring junior developers.", achievements: ["Improved application performance by 40%", "Led team of 5 developers", "Implemented CI/CD pipeline"] },
-    { company: "Startup Solutions", position: "Full Stack Developer", duration: "Jun 2021 - Dec 2022", description: "Developed and maintained multiple client projects using MERN stack.", achievements: ["Built 10+ production applications", "Reduced load time by 50%", "Integrated payment systems"] }
-  ],
-  education: [{ degree: "Bachelor of Technology in Computer Science", institution: "University Name", year: "2018 - 2022", highlights: "CGPA: 8.5/10 | Dean's List" }]
+    { 
+      company: "Self-Learning & Personal Projects", 
+      position: "Aspiring DevOps Engineer", 
+      duration: "2025 - Present", 
+      description: "Building real world projects to master full stack development, focusing on Python backends, React frontends, and modern deployment practices.", 
+      achievements: [
+        "Built 5+ production ready full stack applications",
+        "Integrated AI APIs (OpenAI, Gemini, LangChain) in multiple projects", 
+        "Deployed applications on cloud platforms (Render, Railway, Vercel)"
+      ] 
+    }
+  ],  
+  education: [{ degree: "Bachelor of Commerce (B.Com)", institution: "Ranchi University", year: "2021 - 2024", highlights: "Self taught Full Stack Developer | Transitioned from Commerce to Tech" }]
 };
 
 // Dark Mode Color Themes
@@ -461,6 +583,8 @@ const Portfolio = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showCertificateModal, setShowCertificateModal] = useState(false);
+  const [selectedCertificate, setSelectedCertificate] = useState(null);
 
   
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -638,12 +762,12 @@ const Portfolio = () => {
               
               {/* Theme Controls */}
               <div className="flex items-center gap-2 ml-4 border-l pl-4" style={{ borderColor: theme.primary + '40' }}>
-                <button onClick={() => setIsDarkMode(!isDarkMode)} className={`p-2 rounded-lg ${theme.border || 'border-gray-300'} ${theme.hoverBorder || 'hover:border-gray-400'} transition-all hover:scale-110 border`}>
+                <button onClick={() => setIsDarkMode(!isDarkMode)} aria-label="Toggle dark and light mode" className={`p-2 rounded-lg ${theme.border || 'border-gray-300'} ${theme.hoverBorder || 'hover:border-gray-400'} transition-all hover:scale-110 border`}>
                   {isDarkMode ? <Sun size={20} className={theme.text || 'text-blue-600'} /> : <Moon size={20} className={theme.text || 'text-blue-600'} />}
                 </button>
                 
                 <div className="relative">
-                  <button onClick={() => setShowThemeMenu(!showThemeMenu)} className={`p-2 rounded-lg ${theme.border || 'border-gray-300'} ${theme.hoverBorder || 'hover:border-gray-400'} transition-all hover:scale-110 border`}>
+                  <button onClick={() => setShowThemeMenu(!showThemeMenu)} aria-label="Change color theme" className={`p-2 rounded-lg ${theme.border || 'border-gray-300'} ${theme.hoverBorder || 'hover:border-gray-400'} transition-all hover:scale-110 border`}>
                     <Palette size={20} className={theme.text || 'text-blue-600'} />
                   </button>
                   
@@ -697,7 +821,7 @@ const Portfolio = () => {
               </div>
             </div>
             
-            <button className={`md:hidden ${theme.text || 'text-blue-600'} hover:scale-110 transition-transform`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <button className={`md:hidden ${theme.text || 'text-blue-600'} hover:scale-110 transition-transform`} onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle navigation menu" >
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
@@ -771,7 +895,7 @@ const Portfolio = () => {
             <div className="absolute inset-1 rounded-full overflow-hidden">
               <img src={profileImg} alt="Shaswat Kumar" className="w-full h-full object-cover object-top" />
             </div>
-            <Star className="absolute -top-2 -right-2 text-yellow-400 animate-pulse" size={15} />
+            <Star className="absolute -top-2 -right-2 animate-pulse" size={15} style={{ color: theme.primary }} />
             <div className="absolute inset-0 rounded-full bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
                 <ExternalLink className="opacity-0 group-hover:opacity-100 text-white" size={24} />
             </div>
@@ -842,7 +966,7 @@ const Portfolio = () => {
               { icon: Linkedin, link: PORTFOLIO_DATA.linkedin },
               { icon: Mail, link: `mailto:${PORTFOLIO_DATA.email}` }
             ].map((social, idx) => (
-              <a key={idx} href={social.link} target="_blank" rel="noopener noreferrer" className="relative w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all backdrop-blur-sm group hover:scale-125" style={{ borderColor: theme.primary, boxShadow: `0 0 20px ${theme.glow || 'rgba(0,0,0,0.1)'}` }}>
+              <a key={idx} href={social.link} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${social.icon.name}`} className="relative w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all backdrop-blur-sm group hover:scale-125" style={{ borderColor: theme.primary, boxShadow: `0 0 20px ${theme.glow || 'rgba(0,0,0,0.1)'}` }}>
                 <social.icon size={20} className="transition-transform duration-300 group-hover:rotate-12" style={{ color: theme.primary }} />
                 <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ boxShadow: `0 0 18px ${theme.primary}80`}}/>
               </a>
@@ -927,24 +1051,48 @@ const Portfolio = () => {
               </div>
             </div>
 
-            <div className="space-y-6">
-              <h3 className={`text-3xl font-bold ${theme.text || 'text-blue-600'} flex items-center gap-2`}>
-                <Star className="animate-pulse" />
+            <div className="space-y-5">
+              <h3 className={`text-2xl font-bold ${theme.text || 'text-blue-600'} flex items-center gap-2 mb-6`}>
+                <Star className="animate-pulse" size={20} />
                 Technical Skills
               </h3>
-              
-              {Object.entries(PORTFOLIO_DATA.skills).map(([category, skills]) => (
-                <div key={category} className={`backdrop-blur-sm ${isDarkMode ? 'bg-white/5' : 'bg-white/50'} p-5 rounded-xl border ${theme.border || 'border-gray-200'} ${theme.hoverBorder || 'hover:border-gray-300'} transition-all`}>
-                  <div className={`text-sm ${theme.text || 'text-blue-600'} uppercase tracking-wider mb-3 font-semibold`}>{category}</div>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.map((skill) => (
-                      <span key={skill} className={`px-4 py-2 rounded-full text-sm border transition-all hover:scale-105 backdrop-blur-sm cursor-default`} style={{ background: `${theme.primary}20`, borderColor: theme.primary + '50', color: theme.primary }}>
-                        {skill}
-                      </span>
+
+              <div className={`backdrop-blur-sm ${isDarkMode ? 'bg-white/5' : 'bg-white/50'} rounded-xl border ${theme.border || 'border-gray-200'} overflow-hidden`}>
+                <table className="w-full">
+                  <tbody>
+                    {Object.entries(PORTFOLIO_DATA.skills).map(([category, skills], idx) => (
+                      <tr 
+                        key={category} 
+                        className={`${isDarkMode ? 'hover:bg-white/5' : 'hover:bg-white/70'} transition-all ${idx !== Object.entries(PORTFOLIO_DATA.skills).length - 1 ? 'border-b' : ''}`}
+                        style={{ borderColor: theme.primary + '20' }}
+                      >
+                        <td className="p-4 align-top w-1/4">
+                          <div className={`text-xs ${theme.text || 'text-blue-600'} uppercase tracking-wider font-bold`}>
+                            {category.replace(/_/g, ' ')}
+                          </div>
+                        </td>
+                        <td className="p-4">
+                          <div className="flex flex-wrap gap-2">
+                            {skills.map((skill) => (
+                              <span 
+                                key={skill} 
+                                className="px-3 py-1.5 rounded-lg text-xs font-medium border transition-all hover:scale-105 cursor-default"
+                                style={{ 
+                                  background: `${theme.primary}15`, 
+                                  borderColor: theme.primary + '40', 
+                                  color: theme.primary 
+                                }}
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </td>
+                      </tr>
                     ))}
-                  </div>
-                </div>
-              ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -986,9 +1134,18 @@ const Portfolio = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {PORTFOLIO_DATA.projects.map((project, idx) => (
               <div key={idx} className={`backdrop-blur-sm ${isDarkMode ? 'bg-white/5' : 'bg-white/50'} rounded-2xl overflow-hidden border ${theme.border || 'border-gray-200'} ${theme.hoverBorder || 'hover:border-gray-300'} ${isDarkMode ? 'hover:bg-white/10' : 'hover:bg-white/70'} transition-all duration-300 hover:scale-105 hover:-translate-y-2 group`}>
-                <div className="h-52 flex items-center justify-center relative overflow-hidden" style={{ background: `linear-gradient(135deg, ${theme.primary}30, ${theme.secondary}30)` }}>
+                <div className="h-56 flex items-center justify-center relative overflow-hidden rounded-t-2xl" style={{ background: `linear-gradient(135deg, ${theme.primary}30, ${theme.secondary}30)` }}>
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: `linear-gradient(135deg, ${theme.primary}20, ${theme.secondary}20)` }} />
-                  <Code size={72} className={`${theme.text || 'text-blue-600'} opacity-50 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300`} />
+                  {project.image ? (
+                    <img
+                      src={project.image}
+                      alt={project.name}
+                      loading="lazy" 
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (     
+                    <Code size={72} className={`${theme.text || 'text-blue-600'} opacity-50 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300`} />
+                  )}  
                 </div>
                 <div className="p-6 space-y-4">
                   <h3 className={`text-xl font-bold ${theme.text || 'text-blue-600'}`}>{project.name}</h3>
@@ -1085,23 +1242,204 @@ const Portfolio = () => {
               return (
                 <a 
                   key={idx}
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`backdrop-blur-sm ${isDarkMode ? 'bg-white/5' : 'bg-white/50'} p-6 rounded-2xl border ${theme.border || 'border-gray-200'} ${theme.hoverBorder || 'hover:border-gray-300'} ${isDarkMode ? 'hover:bg-white/10' : 'hover:bg-white/70'} transition-all duration-300 hover:scale-105 hover:-translate-y-2 group cursor-pointer`}
+                  onClick={(e) => {
+                    if (item.hasImage) {
+                      e.preventDefault();
+                      setSelectedCertificate(item);
+                      setShowCertificateModal(true);
+                    } else if (item.link) {
+                      window.open(item.link, "_blank");
+                    }
+                  }}
+                  className={`backdrop-blur-sm ${isDarkMode ? 'bg-white/5' : 'bg-white/50'} rounded-2xl border ${theme.border || 'border-gray-200'} ${theme.hoverBorder || 'hover:border-gray-300'} transition-all duration-300 hover:scale-105 hover:-translate-y-2 group cursor-pointer relative overflow-hidden`}
+                  style={{
+                    boxShadow: isDarkMode ? `0 4px 20px ${theme.glow || 'rgba(0,0,0,0.2)'}` : '0 4px 20px rgba(0,0,0,0.05)'
+                  }}
                 >
-                  <div className="flex items-center justify-center w-16 h-16 rounded-xl mb-4 mx-auto group-hover:scale-110 group-hover:rotate-6 transition-all" 
-                    style={{ background: `linear-gradient(135deg, ${theme.primary}30, ${theme.secondary}30)` }}
-                  >
-                    <Icon className={theme.text || 'text-blue-600'} size={32} />
+                  {/* Hover Glow Effect */}
+                {isDarkMode && (  
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{
+                      background: `radial-gradient(circle at center, ${theme.primary}15 0%, transparent 70%)`
+                    }}
+                  />
+                )}  
+
+                  {/* Top Badge - Only show for certificates with images */}
+                  {item.hasImage && (
+                    <div 
+                      className="absolute top-0 right-0 px-4 py-2 rounded-bl-2xl text-xs font-bold flex items-center gap-1.5 shadow-lg"
+                      style={{
+                        background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
+                        color: 'white'
+                      }}
+                    >
+                      <Award size={14} />
+                      VERIFIED
+                    </div>
+                  )}
+
+                  {/* Certificate Preview - Larger and Better Positioned */}
+                  {item.hasImage && item.certificateImage && (
+                    <div 
+                      className="relative h-40 rounded-t-2xl overflow-hidden border-b"
+                      style={{ 
+                        borderColor: `${theme.primary}30`,
+                        background: isDarkMode ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.8)'
+                      }}
+                    >
+                      <img
+                        src={item.certificateImage}
+                        alt={item.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover object-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
+                      />
+                      {/* Overlay Icon */}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
+                        <ExternalLink 
+                          className="opacity-0 group-hover:opacity-100 text-white transform scale-0 group-hover:scale-100 transition-all duration-300" 
+                          size={32} 
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Card Content */}
+                  <div className="p-6 relative z-10">
+                    {/* For non-certificate items - Enhanced version */}
+                    {!item.hasImage && (
+                      <>
+                        {/* Larger Icon Container with Animation */}
+                        <div className="relative mb-6">
+                          {isDarkMode && (
+                            <div 
+                              className="absolute inset-0 blur-md opacity-15"
+                              style={{ background: theme.primary }}
+                            />
+                          )}
+
+                          <div 
+                            className="relative flex items-center justify-center w-20 h-20 rounded-2xl mx-auto 
+                                      group-hover:scale-105 transition-all"
+                            style={{ 
+                              background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
+                              boxShadow: isDarkMode
+                                ? `0 0 18px ${theme.primary}55`
+                                : 'none'
+                            }}
+                          >
+                            <Icon className="text-white" size={36} />
+                          </div>
+                        </div>
+
+                        {/* Achievement Stats */}
+                        <div className="flex justify-center gap-2 mb-4">
+                          {idx === 1 && (
+                            <>
+                              <div 
+                                className="px-3 py-1 rounded-lg text-xs font-bold border"
+                                style={{
+                                  background: `${theme.primary}15`,
+                                  borderColor: `${theme.primary}40`,
+                                  color: theme.primary
+                                }}
+                              >
+                                📚 100+ Hours
+                              </div>
+                            </>
+                          )}
+                          {idx === 2 && (
+                            <>
+                              <div 
+                                className="px-3 py-1 rounded-lg text-xs font-bold border"
+                                style={{
+                                  background: `${theme.primary}15`,
+                                  borderColor: `${theme.primary}40`,
+                                  color: theme.primary
+                                }}
+                              >
+                                🚀 Live Projects
+                              </div>
+                            </>
+                          )}
+                          {idx === 3 && (
+                            <>
+                              <div 
+                                className="px-3 py-1 rounded-lg text-xs font-bold border"
+                                style={{
+                                  background: `${theme.primary}15`,
+                                  borderColor: `${theme.primary}40`,
+                                  color: theme.primary
+                                }}
+                              >
+                                🤖 AI Powered
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </>
+                    )}
+
+                    {/* Title */}
+                    <h3 className={`text-base font-bold mb-3 text-center leading-tight min-h-[40px] flex items-center justify-center ${theme.text || 'text-blue-600'}`}>
+                      {item.title}
+                    </h3>
+
+                    {/* Issuer */}
+                    <p className={`text-sm text-center font-medium mb-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                      {item.issuer}
+                    </p>
+
+                    {/* Decorative Divider */}
+                    {!item.hasImage && (
+                      <div className="flex items-center justify-center gap-2 my-4">
+                        <div className="w-8 h-[2px] rounded-full" style={{ background: `linear-gradient(to right, transparent, ${theme.primary}, transparent)` }} />
+                        <Star size={12} style={{ color: theme.primary }} className="animate-pulse" />
+                        <div className="w-8 h-[2px] rounded-full" style={{ background: `linear-gradient(to right, transparent, ${theme.primary}, transparent)` }} />
+                      </div>
+                    )}
+
+                    {/* Date Badge */}
+                    <div className="flex justify-center mt-3">
+                      <span 
+                        className="px-4 py-2 rounded-full text-xs font-semibold border shadow-lg"
+                        style={{
+                          background: `${theme.primary}20`,
+                          borderColor: `${theme.primary}50`,
+                          color: theme.primary
+                        }}
+                      >
+                        {item.date}
+                      </span>
+                    </div>
+
+                    {/* View Link - Only for items with hasImage */}
+                    {item.hasImage && (
+                      <div className="mt-4 pt-4 border-t" style={{ borderColor: `${theme.primary}20` }}>
+                        <div 
+                          className="text-center text-sm font-semibold flex items-center justify-center gap-2 group-hover:gap-3 transition-all"
+                          style={{ color: theme.primary }}
+                        >
+                          Click to View Certificate
+                          <ExternalLink size={14} className="group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* External Link for non-certificate items */}
+                    {!item.hasImage && item.link && item.link !== '#projects' && (
+                      <div className="mt-4">
+                        <div 
+                          className="text-center text-xs font-semibold flex items-center justify-center gap-2 opacity-70 group-hover:opacity-100 transition-all"
+                          style={{ color: theme.primary }}
+                        >
+                          View More
+                          <ExternalLink size={12} className="group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <h3 className={`text-lg font-bold mb-2 text-center ${theme.text || 'text-blue-600'}`}>
-                    {item.title}
-                  </h3>
-                  <p className={`text-sm text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>
-                    {item.issuer}
-                  </p>
-                  <p className="text-xs text-center opacity-60">{item.date}</p>
                 </a>
               );
             })}
@@ -1274,7 +1612,7 @@ const Portfolio = () => {
               { icon: Linkedin, link: PORTFOLIO_DATA.linkedin },
               { icon: Mail, link: `mailto:${PORTFOLIO_DATA.email}` }
             ].map((social, idx) => (
-              <a key={idx} href={social.link} target="_blank" rel="noopener noreferrer" className="relative w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all backdrop-blur-sm group hover:scale-125" style={{ borderColor: theme.primary, boxShadow: `0 0 20px ${theme.glow || 'rgba(0,0,0,0.1)'}` }}>
+              <a key={idx} href={social.link} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${social.icon.name}`} className="relative w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all backdrop-blur-sm group hover:scale-125" style={{ borderColor: theme.primary, boxShadow: `0 0 20px ${theme.glow || 'rgba(0,0,0,0.1)'}` }}>
                 <social.icon size={20} className="transition-transform duration-300 group-hover:rotate-12" style={{ color: theme.primary }} />
                 <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ boxShadow: `0 0 18px ${theme.primary}80`}}/>
               </a>
@@ -1289,6 +1627,51 @@ const Portfolio = () => {
           </div>
         </div>
       </footer>
+
+      {/* Certificate Modal */}
+      {showCertificateModal && selectedCertificate && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn"
+          onClick={() => setShowCertificateModal(false)}
+        >
+          <div
+            className="relative max-w-5xl w-full animate-scaleIn"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setShowCertificateModal(false)}
+              className="absolute -top-12 right-0 text-white hover:scale-110 transition-transform flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg backdrop-blur-sm"
+            >
+              <X size={20} />
+              Close
+            </button>
+
+            {/* Certificate Image */}
+            <div className="bg-white rounded-2xl overflow-hidden shadow-2xl">
+              <img
+                src={selectedCertificate.certificateImage}
+                alt={selectedCertificate.title}
+                className="w-full h-auto"
+              />
+            </div>
+
+            {/* Certificate Info */}
+            <div className="mt-4 text-center">
+              
+              <a href={selectedCertificate.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-white hover:opacity-80 transition-opacity bg-white/10 px-6 py-3 rounded-lg backdrop-blur-sm"
+                style={{ color: theme.primary }}
+              >
+                <ExternalLink size={18} />
+                View on Udemy
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Success Modal */}
       {showSuccessModal && (
@@ -1364,8 +1747,14 @@ const Portfolio = () => {
 
         /* Modal scale */
         @keyframes scaleIn {
-          from { transform: scale(0.85); opacity: 0; }
-          to { transform: scale(1); opacity: 1; }
+          from {
+            transform: scale(0.85);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
         }
 
         .animate-spin-slow {
@@ -1384,8 +1773,8 @@ const Portfolio = () => {
         .animate-scaleIn {
           animation: scaleIn 0.25s ease-out;
         }
-      `}</style>
-      
+      `}</style>    
+        
     </div>
   );
 };
