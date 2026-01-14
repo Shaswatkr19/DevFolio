@@ -1,8 +1,21 @@
 @import "tailwindcss";
 
 /* =====================
-   Base (sab ke liye)
+   Global Theme Variables
 ===================== */
+:root {
+  --app-bg: #ffffff; /* Light mode default */
+}
+
+/* =====================
+   Base Reset (ALL DEVICES)
+===================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body,
 #root {
@@ -10,39 +23,52 @@ body,
   min-height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #0a0a1e;
+
+  /* 🔥 IMPORTANT: dynamic theme background */
+  background-color: var(--app-bg);
+
   overflow-x: hidden;
   overscroll-behavior: none;
 }
 
-/* Default font size for all browsers */
+/* =====================
+   HTML Behavior
+===================== */
 html {
-  font-size: 78%; /* Chrome/Windows default */
+  scroll-behavior: smooth;
+
+  /* iOS / mobile fixes */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* =====================
-   ✅ Safari/Firefox detection
-   Using -webkit-hyphens which Chrome doesn't support
-===================== */
-@supports (-webkit-hyphens: none) {
-  html {
-    font-size: 100%;
-  }
-}
-
-/* =====================
-   ✅ Firefox ONLY
-===================== */
-@supports (-moz-appearance: none) {
-  html {
-    font-size: 100%;
-  }
-}
-
-/* =====================
-   Font rendering
+   Body Rendering
 ===================== */
 body {
+  position: relative;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+/* =====================
+   Safe Area (Notch / Bottom Bar)
+===================== */
+#root {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* =====================
+   Prevent FOUC (optional)
+===================== */
+body:not(.loaded) {
+  visibility: hidden;
+}
+
+body.loaded {
+  visibility: visible;
 }

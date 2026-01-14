@@ -636,6 +636,34 @@ const Portfolio = () => {
   const theme = isDarkMode ? DARK_THEMES[darkTheme] : LIGHT_BACKGROUNDS[lightBg];
 
   useEffect(() => {
+    let bgColor = '#0a0a1e'; // default fallback
+  
+    if (isDarkMode) {
+      // 🌙 DARK MODE THEMES
+      const darkThemes = {
+        blue: '#0a0a1e',
+        purple: '#120b2a',
+        green: '#081a14',
+        black: '#000000',
+      };
+  
+      bgColor = darkThemes[darkTheme] || '#0a0a1e';
+    } else {
+      // 🌞 LIGHT MODE BACKGROUNDS
+      const lightThemes = {
+        cream: '#f8fafc',
+        white: '#ffffff',
+        gray: '#f1f5f9',
+      };
+  
+      bgColor = lightThemes[lightBg] || '#f8fafc';
+    }
+  
+    // 🔗 GLOBAL BACKGROUND (mobile bottom area bhi)
+    document.documentElement.style.setProperty('--app-bg', bgColor);
+  }, [isDarkMode, darkTheme, lightBg]);
+
+  useEffect(() => {
     const handleScroll = () => { 
       setScrolled(window.scrollY > 50);
 
