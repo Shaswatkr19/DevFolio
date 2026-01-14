@@ -446,26 +446,49 @@ function AnimatedRole({ roles, isDarkMode, themeColor }) {
 
 const SpaceBackground = ({ isDarkMode }) => {
   const canvasRef = useRef(null);
+  const animationRef = useRef(null);
+  const starsRef = useRef([]);
+  const particlesRef = useRef([]);
+  const shootingStarsRef = useRef([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const initCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
 
-    const stars = Array.from({ length: 200 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      radius: Math.random() * 2,
-      opacity: Math.random(),
-      twinkleSpeed: Math.random() * 0.02 + 0.01
-    }));
+      const isMobile = window.innerWidth < 768;
 
-    const shootingStars = [];
+      const starsCount = isMobile ? 80 : 200;
+      const particlesCount = isMobile ? 20 : 50;
+
+      starsRef.current = Array.from({ length: starsCount }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2,
+        opacity: Math.random(),
+        twinkleSpeed: Math.random() * 0.02 + 0.01
+      }));
+    
+      particlesRef.current = Array.from({ length: particlesCount }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 3 + 1,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        opacity: Math.random() * 0.5 + 0.3
+      }));
+
+      shootingStarsRef.current = [];
+    };
+    initCanvas();
+    
+    let shootingStarTimer = 0;
     const createShootingStar = () => {
-      shootingStars.push({
+      shootingStarsRef.current.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height / 2,
         length: Math.random() * 80 + 20,
@@ -474,26 +497,13 @@ const SpaceBackground = ({ isDarkMode }) => {
       });
     };
 
-    const particles = Array.from({ length: 50 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      radius: Math.random() * 3 + 1,
-      vx: (Math.random() - 0.5) * 0.5,
-      vy: (Math.random() - 0.5) * 0.5,
-      opacity: Math.random() * 0.5 + 0.3
-    }));
-
-    let shootingStarTimer = 0;
-    
     const animate = () => {
-      if (isDarkMode) {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-      } else {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-      }
+      ctx.fillStyle = isDarkMode
+        ? 'rgba(0, 0, 0, 0.15)'
+        : 'rgba(255, 255, 255, 0.3)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      stars.forEach(star => {
+      starsRef.current.forEach(star => {
         star.opacity += star.twinkleSpeed;
         if (star.opacity > 1 || star.opacity < 0.3) star.twinkleSpeed *= -1;
         
@@ -505,7 +515,7 @@ const SpaceBackground = ({ isDarkMode }) => {
         ctx.fill();
       });
 
-      particles.forEach(particle => {
+      particlesRef.current.forEach(particle => {
         particle.x += particle.vx;
         particle.y += particle.vy;
 
@@ -514,7 +524,10 @@ const SpaceBackground = ({ isDarkMode }) => {
 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        const gradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.radius * 3);
+        const gradient = ctx.createRadialGradient(
+          particle.x, particle.y, 0, 
+          particle.x, particle.y, particle.radius * 3
+        );
         
         if (isDarkMode) {
           gradient.addColorStop(0, `rgba(220, 220, 220, ${particle.opacity})`);
@@ -534,17 +547,20 @@ const SpaceBackground = ({ isDarkMode }) => {
           shootingStarTimer = 0;
         }
 
-        shootingStars.forEach((star, index) => {
+        shootingStarsRef.current.forEach((star, index) => {
           star.x += star.speed;
           star.y += star.speed * 0.5;
           star.opacity -= 0.015;
 
           if (star.opacity <= 0) {
-            shootingStars.splice(index, 1);
+            shootingStarsRef.current.splice(index, 1);
             return;
           }
 
-          const gradient = ctx.createLinearGradient(star.x, star.y, star.x - star.length, star.y - star.length * 0.5);
+          const gradient = ctx.createLinearGradient(
+            star.x, star.y,
+            star.x - star.length, star.y - star.length * 0.5
+          );
           gradient.addColorStop(0, `rgba(255, 255, 255, ${star.opacity})`);
           gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
@@ -557,21 +573,27 @@ const SpaceBackground = ({ isDarkMode }) => {
         });
       }
 
-      requestAnimationFrame(animate);
+      animationRef.current = requestAnimationFrame(animate);
     };
 
     animate();
 
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      initCanvas(); // Reinitialize everything
     };
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      window.removeEventListener('resize', handleResize);
+    };
   }, [isDarkMode]);
 
-  return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none" />;
+
+  return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none" style={{ willChange: 'transform', transform: 'translateZ(0)', backfaceVisibility: 'hidden' }} />;
 };
 
 const Portfolio = () => {
@@ -887,7 +909,7 @@ const Portfolio = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="relative flex flex-col justify-center px-4 pt-20 min-h-screen pb-20">
+      <section id="home" className="relative flex flex-col justify-center items-center w-full overflow-hidden px-4" style={{ minHeight: '100vh', paddingTop: '80px', paddingBottom: '60px'}}>
         <div className="max-w-4xl mx-auto text-center space-y-8 relative z-20">
           <div className="relative w-40 h-40 mx-auto cursor-pointer group" onClick={() => setShowImageModal(true)}>
             <div className="absolute inset-0 rounded-full ring-4 ring-green-400 shadow-[0_0_30px_rgba(34,197,94,0.6)] animate-pulse" />
