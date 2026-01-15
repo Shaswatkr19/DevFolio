@@ -429,14 +429,9 @@ function AnimatedRole({ roles, isDarkMode, themeColor }) {
 
   return (
     <p 
-      className="text-2xl md:text-3xl font-light h-10"
-      style={{ 
-        color: isDarkMode ? undefined : themeColor,
-        background: isDarkMode ? 'linear-gradient(to right, rgb(191, 219, 254), rgb(233, 213, 255))' : undefined,
-        WebkitBackgroundClip: isDarkMode ? 'text' : undefined,
-        WebkitTextFillColor: isDarkMode ? 'transparent' : undefined,
-        backgroundClip: isDarkMode ? 'text' : undefined
-      }}
+      className={`text-2xl md:text-3xl font-light h-10 ${
+       isDarkMode ? 'text-white' : 'text-gray-800'
+      }`}
     >
       {text}
       {isTyping && <span className="animate-pulse">|</span>}
@@ -691,6 +686,18 @@ const Portfolio = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
@@ -780,7 +787,7 @@ const Portfolio = () => {
       />
 
       {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? (isDarkMode ? 'bg-[#050514]/95' : 'bg-white/95') + ' backdrop-blur-2xl shadow-2xl border-b ' + (theme.border || 'border-gray-200') : 'bg-transparent'}`}>
+      <nav className={`fixed w-full z-50 pointer-events-auto transition-all duration-300 ${scrolled ? (isDarkMode ? 'bg-[#050514]/95' : 'bg-white/95') + ' backdrop-blur-2xl shadow-2xl border-b ' + (theme.border || 'border-gray-200') : 'bg-transparent'}`}>
         <div className="w-full px-8 lg:px-16">
           <div className="flex justify-between items-center h-20">
             <button onClick={() => scrollToSection('about')} className="flex items-center gap-3 group hover:opacity-80 transition-all ml-0">
@@ -878,68 +885,88 @@ const Portfolio = () => {
         </div>
         
         {isMenuOpen && (
-          <div className={`md:hidden ${isDarkMode ? 'bg-[#050514]/95' : 'bg-white/95'} backdrop-blur-2xl`}>
-            <div className="px-4 py-3 space-y-2">
-              {['home', 'about', 'services', 'projects', 'experience','highlights', 'contact'].map((item) => (
-                <button key={item} onClick={() => scrollToSection(item)} className={`block w-full text-left px-4 py-3 capitalize rounded-lg transition-all ${activeSection === item ? (isDarkMode ? 'bg-blue-500/20' : 'bg-blue-100') + ' ' + (theme.text || 'text-blue-600') : isDarkMode ? 'hover:bg-blue-500/10' : 'hover:bg-gray-100'}`}>
-                  {item}
+        <div
+          className={`md:hidden fixed left-0 right-0 top-20 bottom-0 z-40 ${
+            isDarkMode ? 'bg-[#050514]/95' : 'bg-white/95'
+          } backdrop-blur-2xl`}
+        >
+          {/* 🔒 SCROLLABLE MENU CONTENT */}
+          <div className="h-full overflow-y-auto px-4 pt-24 pb-10 space-y-2">
+            {['home', 'about', 'services', 'projects', 'experience','highlights', 'contact'].map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item)}
+                className={`block w-full text-left px-4 py-3 capitalize rounded-lg transition-all ${
+                  activeSection === item
+                    ? (isDarkMode ? 'bg-blue-500/20' : 'bg-blue-100') + ' ' + (theme.text || 'text-blue-600')
+                    : isDarkMode
+                    ? 'hover:bg-blue-500/10'
+                    : 'hover:bg-gray-100'
+                }`}
+              >
+                {item}
+              </button>
+            ))}
+
+            {/* THEME + COLORS (NOW SCROLLABLE) */}
+            <div className="pt-4 border-t" style={{ borderColor: theme.primary + '30' }}>
+              <div className="flex gap-2 mb-3">
+                <button
+                  onClick={() => setIsDarkMode(!isDarkMode)}
+                  className="flex-1 p-3 rounded-lg border flex items-center justify-center gap-2"
+                >
+                  {isDarkMode ? 'Light' : 'Dark'}
                 </button>
-              ))}
-              
-              <div className="pt-4 border-t" style={{ borderColor: theme.primary + '30' }}>
-                <div className="flex gap-2 mb-3">
-                  <button onClick={() => setIsDarkMode(!isDarkMode)} className={`flex-1 p-3 rounded-lg ${theme.border || 'border-gray-300'} ${theme.hoverBorder || 'hover:border-gray-400'} transition-all border flex items-center justify-center gap-2`}>
-                    {isDarkMode ? <><Sun size={18} /> Light</> : <><Moon size={18} /> Dark</>}
-                  </button>
-                </div>
-                
-                <div className="text-xs font-semibold mb-2 opacity-60 px-2">
-                  {isDarkMode ? 'COLOR THEME' : 'BACKGROUND'}
-                </div>
-                
-                <div className="grid grid-cols-2 gap-2">
-                  {isDarkMode ? (
-                    Object.entries(DARK_THEMES).map(([key, t]) => (
+              </div>
+
+              <div className="text-xs font-semibold mb-2 opacity-60 px-2">
+                {isDarkMode ? 'COLOR THEME' : 'BACKGROUND'}
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                {isDarkMode
+                  ? Object.entries(DARK_THEMES).map(([key, t]) => (
                       <button
                         key={key}
                         onClick={() => setDarkTheme(key)}
-                        className={`p-3 rounded-lg transition-all flex items-center gap-2 ${darkTheme === key ? 'ring-2 ring-offset-2' : ''}`}
-                        style={{ 
-                          background: `${t.primary}20`,
-                          ringColor: t.primary
-                        }}
+                        className={`p-3 rounded-lg flex items-center gap-2 ${
+                          darkTheme === key ? 'ring-2 ring-offset-2' : ''
+                        }`}
+                        style={{ background: `${t.primary}20`, ringColor: t.primary }}
                       >
-                        <div className="w-5 h-5 rounded-full" style={{ background: `linear-gradient(135deg, ${t.primary}, ${t.secondary})` }} />
+                        <div className="w-5 h-5 rounded-full" style={{ background: t.primary }} />
                         <span className="text-sm capitalize">{key}</span>
                       </button>
                     ))
-                  ) : (
-                    Object.entries(LIGHT_BACKGROUNDS).map(([key, bg]) => (
+                  : Object.entries(LIGHT_BACKGROUNDS).map(([key, bg]) => (
                       <button
                         key={key}
                         onClick={() => setLightBg(key)}
-                        className={`p-3 rounded-lg transition-all ${lightBg === key ? 'ring-2 ring-offset-2' : ''}`}
-                        style={{ 
-                          background: `${bg.primary}20`,
-                          ringColor: bg.primary
-                        }}
+                        className={`p-3 rounded-lg ${
+                          lightBg === key ? 'ring-2 ring-offset-2' : ''
+                        }`}
+                        style={{ background: `${bg.primary}20`, ringColor: bg.primary }}
                       >
-                        <div className="w-5 h-5 rounded-full mx-auto mb-1" style={{ background: `linear-gradient(135deg, ${bg.primary}, ${bg.secondary})` }} />
+                        <div className="w-5 h-5 rounded-full mx-auto mb-1" style={{ background: bg.primary }} />
                         <span className="text-xs">{bg.name}</span>
                       </button>
-                    ))
-                  )}
-                </div>
+                    ))}
               </div>
             </div>
           </div>
-        )}
+        </div>
+      )}
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="relative flex flex-col justify-center items-center w-full overflow-hidden px-4" style={{ minHeight: '100vh', paddingTop: '80px', paddingBottom: '60px'}}>
-        <div className="max-w-4xl mx-auto text-center space-y-8 relative z-20">
-          <div className="relative w-40 h-40 mx-auto cursor-pointer group" onClick={() => setShowImageModal(true)}>
+      <section 
+        id="home" 
+        className="relative flex flex-col justify-center items-center w-full overflow-hidden px-4 sm:px-6 pt-24 pb-32 sm:pb-24 min-h-screen"
+      >
+        <div className="max-w-4xl mx-auto text-center space-y-4 sm:space-y-6 relative z-20">
+          
+          {/* Profile Image */}
+          <div className="relative w-32 h-32 sm:w-36 sm:h-36 lg:w-40 lg:h-40 mx-auto cursor-pointer group" onClick={() => setShowImageModal(true)}>
             <div className="absolute inset-0 rounded-full ring-4 ring-green-400 shadow-[0_0_30px_rgba(34,197,94,0.6)] animate-pulse" />
             <div className={`absolute inset-2 ${isDarkMode ? 'bg-[#0a0a1e]' : 'bg-white'} rounded-full`} />
             <div className="absolute inset-1 rounded-full overflow-hidden">
@@ -947,18 +974,21 @@ const Portfolio = () => {
             </div>
             <Star className="absolute -top-2 -right-2 animate-pulse" size={15} style={{ color: theme.primary }} />
             <div className="absolute inset-0 rounded-full bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
-                <ExternalLink className="opacity-0 group-hover:opacity-100 text-white" size={24} />
+              <ExternalLink className="opacity-0 group-hover:opacity-100 text-white" size={24} />
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div className={`text-sm ${theme.text || 'text-blue-600'} tracking-widest uppercase animate-pulse flex items-center justify-center gap-2`}>
+          {/* Content */}
+          <div className="space-y-3 sm:space-y-4">
+            {/* Welcome Text */}
+            <div className={`text-xs sm:text-sm ${theme.text || 'text-blue-600'} tracking-widest uppercase animate-pulse flex items-center justify-center gap-2`}>
               <Star size={12} className="animate-spin-slow" />
               Welcome to my universe
               <Star size={12} className="animate-spin-slow" />
             </div>
             
-            <h1 className="text-6xl md:text-8xl font-bold">
+            {/* Name */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
               <span
                 style={{ color: isDarkMode ? undefined : theme.primary }} 
                 className={isDarkMode ? `bg-gradient-to-r ${theme.gradient || 'from-blue-400 to-purple-400'} bg-clip-text text-transparent animate-gradient` : 'animate-gradient'}>
@@ -966,14 +996,17 @@ const Portfolio = () => {
               </span>
             </h1>
             
-            <div className="relative">
-              <AnimatedRole roles={PORTFOLIO_DATA.roles} isDarkMode={isDarkMode} themeColor={theme.primary} />
+            {/* Animated Role */}
+            <div className="relative min-h-[2rem] sm:min-h-[2.5rem]">
+              <AnimatedRole roles={PORTFOLIO_DATA.roles} isDarkMode={isDarkMode} />
             </div>
             
-            <p className={`text-xl ${isDarkMode ? 'text-gray-300' : 'text-gray-700'} max-w-2xl mx-auto leading-relaxed`}>
+            {/* Tagline */}
+            <p className={`text-sm sm:text-base lg:text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-700'} max-w-2xl mx-auto leading-relaxed`}>
               {PORTFOLIO_DATA.tagline}
             </p>
             
+            {/* Status Badge */}
             <div className="flex items-center justify-center gap-3 text-sm">
               <div className="relative">
                 <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50" />
@@ -983,17 +1016,28 @@ const Portfolio = () => {
             </div>
           </div>  
 
-          <div className="flex flex-wrap gap-4 justify-center pt-4">
-            <button onClick={() => scrollToSection('projects')} className={`group px-8 py-4 rounded-full font-semibold hover:shadow-2xl transition-all hover:scale-105 flex items-center gap-2 text-white`} style={{ background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})` }}>
-              <Rocket size={20} className="group-hover:translate-x-1 transition-transform" />
+          {/* CTA Buttons */}
+          <div className="flex flex-wrap gap-3 sm:gap-4 justify-center pt-2 sm:pt-4">
+            <button 
+              onClick={() => scrollToSection('projects')} 
+              className="group px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:shadow-2xl transition-all hover:scale-105 flex items-center gap-2 text-white text-sm sm:text-base" 
+              style={{ background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})` }}
+            >
+              <Rocket size={18} className="group-hover:translate-x-1 transition-transform" />
               Explore Projects
             </button>
-            <button onClick={() => scrollToSection('contact')} className={`px-8 py-4 border-2 rounded-full font-semibold transition-all hover:scale-110 backdrop-blur-sm`} style={{ borderColor: theme.primary + '80', color: theme.primary }}>
+            
+            <button 
+              onClick={() => scrollToSection('contact')} 
+              className="px-6 sm:px-8 py-3 sm:py-4 border-2 rounded-full font-semibold transition-all hover:scale-110 backdrop-blur-sm text-sm sm:text-base" 
+              style={{ borderColor: theme.primary + '80', color: theme.primary }}
+            >
               Contact Me
             </button>
+            
             <button 
               onClick={() => (window.location.href = "mailto:shaswatsinha356@gmail.com?subject=Hiring%20Inquiry")} 
-              className="px-8 py-4 border-2 rounded-full font-semibold transition-all hover:scale-110 shadow-lg flex items-center gap-2"
+              className="px-6 sm:px-8 py-3 sm:py-4 border-2 rounded-full font-semibold transition-all hover:scale-110 shadow-lg flex items-center gap-2 text-sm sm:text-base"
               style={{
                 borderColor: isDarkMode ? 'rgba(34, 197, 94, 0.5)' : 'rgb(34, 197, 94)',
                 backgroundColor: isDarkMode ? 'transparent' : 'rgb(34, 197, 94)',
@@ -1001,32 +1045,55 @@ const Portfolio = () => {
                 boxShadow: isDarkMode ? '0 10px 15px -3px rgba(34, 197, 94, 0.3)' : '0 10px 15px -3px rgba(34, 197, 94, 0.5)'
               }}
             >
-              <Mail size={20} />
+              <Mail size={18} />
               Hire Me
             </button>  
-            <a href="/Shaswat_Kumar_Resume.pdf" download className={`px-8 py-4 border-2 rounded-full font-semibold transition-all hover:scale-110 flex items-center gap-2 backdrop-blur-sm`} style={{ borderColor: theme.secondary + '80', color: theme.secondary }}>
-              <Download size={20} />
+            
+            <a 
+              href="/Shaswat_Kumar_Resume.pdf" 
+              download 
+              className="px-6 sm:px-8 py-3 sm:py-4 border-2 rounded-full font-semibold transition-all hover:scale-110 flex items-center gap-2 backdrop-blur-sm text-sm sm:text-base" 
+              style={{ borderColor: theme.secondary + '80', color: theme.secondary }}
+            >
+              <Download size={18} />
               Resume
             </a>
           </div>
 
-          <div className="flex gap-6 justify-center pt-6 relative z-10">
-            {[
-              { icon: Github, link: PORTFOLIO_DATA.github },
-              { icon: Linkedin, link: PORTFOLIO_DATA.linkedin },
-              { icon: Mail, link: `mailto:${PORTFOLIO_DATA.email}` }
-            ].map((social, idx) => (
-              <a key={idx} href={social.link} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${social.icon.name}`} className="relative w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all backdrop-blur-sm group hover:scale-125" style={{ borderColor: theme.primary, boxShadow: `0 0 20px ${theme.glow || 'rgba(0,0,0,0.1)'}` }}>
-                <social.icon size={20} className="transition-transform duration-300 group-hover:rotate-12" style={{ color: theme.primary }} />
-                <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ boxShadow: `0 0 18px ${theme.primary}80`}}/>
-              </a>
-            ))}
-          </div>
+          {/* Social Links & Arrow Container */}
+          <div className="space-y-3 sm:space-y-4 pt-2 sm:pt-4">
+            {/* Social Links */}
+            <div className="flex gap-4 sm:gap-6 justify-center relative z-10">
+              {[
+                { icon: Github, link: PORTFOLIO_DATA.github },
+                { icon: Linkedin, link: PORTFOLIO_DATA.linkedin },
+                { icon: Mail, link: `mailto:${PORTFOLIO_DATA.email}` }
+              ].map((social, idx) => (
+                <a 
+                  key={idx} 
+                  href={social.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  aria-label={`Visit ${social.icon.name}`} 
+                  className="relative w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all backdrop-blur-sm group hover:scale-125" 
+                  style={{ borderColor: theme.primary, boxShadow: `0 0 20px ${theme.glow || 'rgba(0,0,0,0.1)'}` }}
+                >
+                  <social.icon size={20} className="transition-transform duration-300 group-hover:rotate-12" style={{ color: theme.primary }} />
+                  <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ boxShadow: `0 0 18px ${theme.primary}80`}}/>
+                </a>
+              ))}
+            </div>
 
-          <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 animate-bounce z-20">
-            <button onClick={() => scrollToSection("about")} className="cursor-pointer" aria-label="Scroll down"> 
-              <ChevronDown size={36} className={`${theme.text || 'text-blue-600'} opacity-85 hover:opacity-100 transition-all`} />
-            </button>
+            {/* Scroll Down Arrow */}
+            <div className="flex justify-center">
+              <button 
+                onClick={() => scrollToSection("about")} 
+                className="cursor-pointer inline-flex items-center justify-center animate-bounce" 
+                aria-label="Scroll down"
+              > 
+                <ChevronDown size={36} className={`${theme.text || 'text-blue-600'} opacity-85 hover:opacity-100 transition-all`} />
+              </button>
+            </div>
           </div>
         </div>
       </section>
