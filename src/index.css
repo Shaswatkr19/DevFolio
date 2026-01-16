@@ -24,8 +24,8 @@ html,
 body,
 #root {
   width: 100%;
-  min-height: 100vh; /* ✅ changed from 100% to 100vh */
-  height: 100%; /* ✅ added explicit height */
+  min-height: 100vh; 
+  height: 100%;
   margin: 0;
   padding: 0;
   background-color: var(--app-bg);
@@ -37,6 +37,7 @@ body,
 ===================== */
 html {
   scroll-behavior: smooth;
+  overscroll-behavior: none; 
 
   /* Mobile text zoom fix */
   -webkit-text-size-adjust: 100%;
@@ -49,6 +50,7 @@ html {
 ===================== */
 body {
   position: relative;
+  overscroll-behavior-y: contain;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
