@@ -7,6 +7,10 @@
   --app-bg: #ffffff; /* light mode default */
 }
 
+[data-theme="dark"] {
+  --app-bg: #000000;
+}
+
 /* =====================
    Base Reset (ALL DEVICES)
 ===================== */
@@ -20,14 +24,12 @@ html,
 body,
 #root {
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh; /* ✅ changed from 100% to 100vh */
+  height: 100%; /* ✅ added explicit height */
   margin: 0;
   padding: 0;
-
-  /* 🌍 Universal background (mobile bottom bar included) */
   background-color: var(--app-bg);
-
-  overflow-x: hidden;
+  overflow-x: hidden; /* prevents horizontal scroll */
 }
 
 /* =====================

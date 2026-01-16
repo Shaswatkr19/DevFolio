@@ -631,58 +631,76 @@ const Portfolio = () => {
   const theme = isDarkMode ? DARK_THEMES[darkTheme] : LIGHT_BACKGROUNDS[lightBg];
 
   useEffect(() => {
-    let bgColor = '#0a0a1e'; // default fallback
+    let bgColor = '#ffffff'; 
   
     if (isDarkMode) {
-      // 🌙 DARK MODE THEMES
+      // 🌙 DARK MODE - Match the gradient background colors
       const darkThemes = {
         blue: '#0a0a1e',
-        purple: '#120b2a',
-        green: '#081a14',
-        black: '#000000',
+        purple: '#0a0a1e', 
+        green: '#0a0a1e',
+        pink: '#0a0a1e',   
+        cyan: '#0a0a1e',
+        orange: '#0a0a1e',
+        // ... add all other dark themes with same base color
       };
-  
-      bgColor = darkThemes[darkTheme] || '#0a0a1e';
+      bgColor = darkThemes[darkTheme] || '#000000';
     } else {
-      // 🌞 LIGHT MODE BACKGROUNDS
+      // ☀️ LIGHT MODE - Match the LIGHT_BACKGROUNDS
       const lightThemes = {
-        cream: '#f8fafc',
-        white: '#ffffff',
-        gray: '#f1f5f9',
+        cream: '#fff7ed',    // ✅ matches cream gradient start
+        cyan: '#ecfeff',     // ✅ matches cyan gradient start
+        lavender: '#faf5ff', // ✅ matches lavender gradient start
+        peach: '#ffedd5',    // ✅ matches peach gradient start
+        mint: '#ecfdf5',     // ✅ matches mint gradient start
+        sky: '#f0f9ff',      // ✅ matches sky gradient start
+        rose: '#fdf2f8',     // ✅ matches rose gradient start
       };
-  
-      bgColor = lightThemes[lightBg] || '#f8fafc';
+      bgColor = lightThemes[lightBg] || '#fff7ed';
     }
   
-    // 🔗 GLOBAL BACKGROUND (mobile bottom area bhi)
+    // 🔗 Apply to CSS variable
     document.documentElement.style.setProperty('--app-bg', bgColor);
   }, [isDarkMode, darkTheme, lightBg]);
 
   useEffect(() => {
     const handleScroll = () => { 
       setScrolled(window.scrollY > 50);
-
-      const sections = ['home', 'about', 'services', 'projects', 'experience', 'highlights', 'contact'];
-      const current = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-
-      if (current) setActiveSection(current);
     }; 
-
+  
     const handleMouseMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
     
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('mousemove', handleMouseMove);
+  
+    // ✅ NEW: Intersection Observer for accurate section detection
+    const observerOptions = {
+      root: null,
+      rootMargin: '-80px 0px -50% 0px', // Account for navbar height
+      threshold: 0
+    };
+  
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+  
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+  
+    // Observe all sections
+    const sections = ['home', 'about', 'services', 'projects', 'experience', 'highlights', 'contact'];
+    sections.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
+      observer.disconnect();
     };
   }, []);
 
@@ -749,7 +767,9 @@ const Portfolio = () => {
       style={{
         background: isDarkMode
           ? 'linear-gradient(to bottom, #0a0a1e, #0f0f2e, #0a0a1e)'
-          : (LIGHT_BACKGROUNDS[lightBg]?.bgStyle || LIGHT_BACKGROUNDS['cream'].bgStyle)
+          : (LIGHT_BACKGROUNDS[lightBg]?.bgStyle || LIGHT_BACKGROUNDS['cream'].bgStyle),
+        minHeight: '100vh',
+        position: 'relative'  
       }}
     >
       
