@@ -807,7 +807,7 @@ const Portfolio = () => {
       />
 
       {/* Navigation */}
-      <nav className={`fixed w-full z-50 pointer-events-auto transition-all duration-300 ${scrolled ? (isDarkMode ? 'bg-[#050514]/95' : 'bg-white/95') + ' backdrop-blur-2xl shadow-2xl border-b ' + (theme.border || 'border-gray-200') : 'bg-transparent'}`}>
+      <nav className={`fixed w-full z-50 pointer-events-auto transition-all duration-300 ${scrolled ? (isDarkMode ? 'bg-[#050514]/98' : 'bg-white/98') + ' backdrop-blur-2xl shadow-2xl border-b ' + (theme.border || 'border-gray-200') : (isDarkMode ? 'bg-[#050514]/60' : 'bg-white/40') + ' backdrop-blur-md'}`}>
         <div className="w-full px-8 lg:px-16">
           <div className="flex justify-between items-center h-20">
             <button onClick={() => scrollToSection('about')} className="flex items-center gap-3 group hover:opacity-80 transition-all ml-0">
