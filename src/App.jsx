@@ -636,12 +636,12 @@ const Portfolio = () => {
     if (isDarkMode) {
       // 🌙 DARK MODE - Match the gradient background colors
       const darkThemes = {
-        blue: '#000000',
-        purple: '#000000', 
-        green: '#000000',
-        pink: '#000000',   
-        cyan: '#000000',
-        orange: '#000000',
+        blue: '#0a0a1e',
+        purple: '#0a0a1e', 
+        green: '#0a0a1e',
+        pink: '#0a0a1e',   
+        cyan: '#0a0a1e',
+        orange: '#0a0a1e',
         // ... add all other dark themes with same base color
       };
       bgColor = darkThemes[darkTheme] || '#000000';
