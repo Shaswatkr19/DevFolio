@@ -906,9 +906,12 @@ const Portfolio = () => {
         
         {isMenuOpen && (
         <div
-          className={`md:hidden fixed left-0 right-0 top-20 bottom-0 z-40 ${
-            isDarkMode ? 'bg-[#050514]/95' : 'bg-white/95'
-          } backdrop-blur-2xl`}
+          className={`md:hidden fixed left-0 right-0 top-20 bottom-0 z-40 backdrop-blur-2xl`}
+          style={{
+            background: isDarkMode
+              ? 'rgba(5,5,20,0.95)'
+              : LIGHT_BACKGROUNDS[lightBg]?.bgStyle
+          }}
         >
           {/* 🔒 SCROLLABLE MENU CONTENT */}
           <div className="h-full overflow-y-auto px-4 pt-24 pb-10 space-y-2">
@@ -920,8 +923,8 @@ const Portfolio = () => {
                   activeSection === item
                     ? (isDarkMode ? 'bg-blue-500/20' : 'bg-blue-100') + ' ' + (theme.text || 'text-blue-600')
                     : isDarkMode
-                    ? 'hover:bg-blue-500/10'
-                    : 'hover:bg-gray-100'
+                    ? 'text-gray-300 hover:bg-blue-500/10'
+                    : 'text-gray-800 hover:bg-gray-100'
                 }`}
               >
                 {item}
