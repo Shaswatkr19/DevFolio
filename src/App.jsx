@@ -142,7 +142,7 @@ const PORTFOLIO_DATA = {
       tech: ["Python", "Django", "DRF", "JWT Authentication", "Redis", "SQLite",  "Daphne Server", "WebSockets", "HTTP Protocol"],
       category: "Web App",
       github: "https://github.com/Shaswatkr19/PingMe",
-      // demo: "In progress",
+      demo: "https://chatpingme.netlify.app",
       image: pingmeImg
     }, 
     
